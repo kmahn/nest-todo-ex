@@ -7,10 +7,8 @@ import {
 } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { hashSync } from 'bcrypt';
 import { Model } from 'mongoose';
-import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { BatchModule } from './batch/batch.module';
 import { AppConfigModule } from './config/app-config.module';

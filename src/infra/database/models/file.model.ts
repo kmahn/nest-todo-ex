@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { FILE_REF_TYPE, FileRefType, File } from '../../../types/file';
+import { File, FILE_REF_TYPE, FileRefType } from '../../../types/file';
 
 type FieldType = Pick<
   File,
@@ -8,7 +8,10 @@ type FieldType = Pick<
 > &
   Partial<Pick<File, 'ref' | 'refType'>>;
 
-@Schema({ collection: 'file', timestamps: { createdAt: true, updatedAt: false } })
+@Schema({
+  collection: 'file',
+  timestamps: { createdAt: true, updatedAt: false },
+})
 export class FileDocument extends Document implements FieldType {
   @Prop({ type: String })
   filename: string;
@@ -32,7 +35,7 @@ export class FileDocument extends Document implements FieldType {
     type: String,
     enum: [...FILE_REF_TYPE, null],
     default: null,
-    index: true
+    index: true,
   })
   refType?: FileRefType | null;
 }

@@ -11,11 +11,11 @@ export const logger = WinstonModule.createLogger({
       format: winston.format.combine(
         winston.format.timestamp(),
         nestWinstonUtilities.format.nestLike('TodoApp', {
-          prettyPrint: true
-        })
-      )
-    })
-  ]
+          prettyPrint: true,
+        }),
+      ),
+    }),
+  ],
 });
 
 export const setupSwagger = (app: INestApplication) => {

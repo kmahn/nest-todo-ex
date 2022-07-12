@@ -17,7 +17,7 @@ import { LocalStrategy } from './strategies/local-strategy';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
-        signOptions: { expiresIn: '1d' }
+        signOptions: { expiresIn: '1d' },
       }),
     }),
   ],
@@ -25,13 +25,12 @@ import { LocalStrategy } from './strategies/local-strategy';
     AuthService,
     {
       provide: APP_GUARD,
-      useClass: RolesGuard
+      useClass: RolesGuard,
     },
     LocalStrategy,
     JwtStrategy,
-    CreateAuthCommandHandler
+    CreateAuthCommandHandler,
   ],
-  exports: [AuthService]
+  exports: [AuthService],
 })
-export class AuthModule {
-}
+export class AuthModule {}

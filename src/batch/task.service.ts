@@ -19,14 +19,14 @@ export class TaskService {
 
   @Cron('0 * * * * *', {
     name: 'unused file deletion',
-    timeZone: 'Asia/Seoul'
+    timeZone: 'Asia/Seoul',
   })
   async handleSchedule() {
     const beforeHour = new Date();
     beforeHour.setMinutes(beforeHour.getMinutes() - 1);
     const unusedFiles = await this.fileModel.find({
       refType: null,
-      createdAt: { $lte: beforeHour }
+      createdAt: { $lte: beforeHour },
     });
 
     // 파일 지우기

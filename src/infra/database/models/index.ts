@@ -4,7 +4,7 @@ import { AuthDocument, AuthSchema } from './auth.model';
 import { FileDocument, FileSchema } from './file.model';
 import {
   RefreshTokenDocument,
-  RefreshTokenSchema
+  RefreshTokenSchema,
 } from './refresh-token.model';
 import { TodoDocument, TodoSchema } from './todo.model';
 import { UserDocument, UserSchema } from './user.model';
@@ -14,7 +14,7 @@ const models: ModelDefinition[] = [
   { name: FileDocument.name, schema: FileSchema },
   { name: RefreshTokenDocument.name, schema: RefreshTokenSchema },
   { name: TodoDocument.name, schema: TodoSchema },
-  { name: UserDocument.name, schema: UserSchema }
+  { name: UserDocument.name, schema: UserSchema },
 ];
 
 export interface Models {

@@ -13,7 +13,6 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { Auth } from '../decorators/auth.decorator';
-import { Roles } from '../decorators/role.decorator';
 import { User } from '../decorators/user.decorator';
 import { TodoDocument } from '../infra/database/models/todo.model';
 import { UserProfile } from '../types/user';

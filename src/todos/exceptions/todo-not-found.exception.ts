@@ -1,6 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 import { ErrorCodes } from '../../errors/error-definition';
-import { ApiExceptionExample, HttpExceptionResponse } from '../../types/exception';
+import {
+  ApiExceptionExample,
+  HttpExceptionResponse,
+} from '../../types/exception';
 
 export class TodoNotFoundException
   extends NotFoundException

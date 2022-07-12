@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { User, TUserRole, USER_ROLES } from '../../../types/user';
+import { TUserRole, User, USER_ROLES } from '../../../types/user';
 
 @Schema({
   collection: 'user',
   timestamps: { createdAt: 'joinedAt', updatedAt: true },
 })
-export class UserDocument extends Document
+export class UserDocument
+  extends Document
   implements Pick<User, 'role' | 'email' | 'name' | 'phone' | 'auth'>
 {
   @Prop({ type: String, enum: USER_ROLES, default: 'member' })
