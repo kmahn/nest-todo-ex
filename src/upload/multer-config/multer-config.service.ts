@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
+import {
+  MulterModuleOptions,
+  MulterOptionsFactory,
+} from '@nestjs/platform-express';
 import { existsSync, mkdirSync } from 'fs';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -10,7 +13,7 @@ import multerConfig from '../../config/factories/multer.config';
 @Injectable()
 export class MulterConfigService implements MulterOptionsFactory {
   constructor(
-    @Inject(multerConfig.KEY) private config: ConfigType<typeof multerConfig>
+    @Inject(multerConfig.KEY) private config: ConfigType<typeof multerConfig>,
   ) {}
 
   createMulterOptions(): Promise<MulterModuleOptions> | MulterModuleOptions {

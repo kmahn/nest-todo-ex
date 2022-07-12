@@ -5,8 +5,7 @@ import { LoggingInterceptor } from './logging.interceptor';
 @Module({
   providers: [
     Logger,
-    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor }
-  ]
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+  ],
 })
-export class LoggingModule {
-}
+export class LoggingModule {}

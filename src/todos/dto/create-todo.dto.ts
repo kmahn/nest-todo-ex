@@ -5,7 +5,7 @@ import {
   IsEmpty,
   IsNotEmpty,
   IsOptional,
-  IsString
+  IsString,
 } from 'class-validator';
 import { Todo } from '../../types/todo';
 

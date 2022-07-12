@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { compareSync, hashSync } from 'bcrypt';
 import mongoose, { Document } from 'mongoose';
-import { AUTH_PROVIDERS, Auth, TAuthProvider } from '../../../types/auth';
+import { Auth, AUTH_PROVIDERS, TAuthProvider } from '../../../types/auth';
 
 type FieldType = Pick<Auth, 'providerId' | 'password' | 'user'> &
   Partial<Pick<Auth, 'provider'>>;
@@ -34,6 +34,6 @@ AuthSchema.virtual('password').set(function (password: string) {
   this.hashedPassword = hashSync(password, 12);
 });
 
-AuthSchema.methods.validatePassword = function(password: string): boolean {
+AuthSchema.methods.validatePassword = function (password: string): boolean {
   return compareSync(password, this.hashedPassword);
 };

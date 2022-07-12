@@ -1,4 +1,4 @@
-import { HttpException as NestHttpException, HttpStatus } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 import { ErrorCodes } from '../errors/error-definition';
 
 export interface HttpExceptionResponse {
@@ -11,4 +11,3 @@ export interface HttpExceptionResponse {
 export interface ApiExceptionExample {
   get example(): HttpExceptionResponse;
 }
-

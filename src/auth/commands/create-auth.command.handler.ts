@@ -6,9 +6,10 @@ import { CreateAuthCommand } from './create-auth.command';
 
 @CommandHandler(CreateAuthCommand)
 export class CreateAuthCommandHandler
-  implements ICommandHandler<CreateAuthCommand> {
+  implements ICommandHandler<CreateAuthCommand>
+{
   constructor(
-    @InjectModel(AuthDocument.name) private authModel: Model<AuthDocument>
+    @InjectModel(AuthDocument.name) private authModel: Model<AuthDocument>,
   ) {}
 
   async execute(command: CreateAuthCommand): Promise<AuthDocument> {
