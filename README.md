@@ -1,17 +1,22 @@
 # NestJS를 이용한 Todo API
 
+## 패키지 설치
+```shell
+$ npm i
+```
+
 ## Start MongoDB
 ```shell
 $ npm run docker:mongo:start
 ```
 
 ## env 파일 설정
-다음의 파일들을 생성
+프로젝트 루트의 config 폴더 아래에 다음의 파일들을 생성
 * Development: .development.env
 * Stage: .stage.env
 * Production: .product.env
 
-각 파일 내용
+env 파일 내용
 ```
 PORT=<사용할 API 서버 포트>
 MONGO_URI=<몽고 데이터베이스 URI, 예: mongodb://localhost/todo>
