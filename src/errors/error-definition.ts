@@ -1,0 +1,4 @@
+export enum ErrorCodes {
+  ACCESS_TOKEN_EXPIRED = 'ACCESS_TOKEN_EXPIRED',
+  TODO_NOT_FOUND = 'TODO_NOT_FOUND',
+}
