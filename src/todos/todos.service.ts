@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Connection } from '../infra/database/connection';
@@ -76,7 +76,7 @@ export class TodosService {
     const todo: TodoDocument = await this.todoModel.findById(id).exec();
 
     if (!todo) {
-      throw new NotFoundException(`Not Found Todo ${id}`);
+      throw new TodoNotFoundException();
     }
 
     const diff = (arr1, arr2) => arr1.filter((v) => !arr2.includes(v));
@@ -104,7 +104,7 @@ export class TodosService {
   async deleteOne(id: string): Promise<TodoDocument> {
     const todo: TodoDocument = await this.todoModel.findById(id);
     if (!todo) {
-      throw new NotFoundException(`Not Found Todo ${id}`);
+      throw new TodoNotFoundException();
     }
 
     await todo.deleteOne();

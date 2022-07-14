@@ -1,12 +1,8 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { TUserRole } from '../../types/user';
+import { UnauthorizedRequestException } from '../exceptions/unauthorized-request.exception';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -28,11 +24,11 @@ export class RolesGuard implements CanActivate {
     const user = request.user;
 
     if (!user) {
-      throw new ForbiddenException('권한이 없는 요청입니다');
+      throw new UnauthorizedRequestException();
     }
 
     if (!roles.includes(user.role)) {
-      throw new ForbiddenException('권한이 없는 요청입니다');
+      throw new UnauthorizedRequestException();
     }
 
     return true;

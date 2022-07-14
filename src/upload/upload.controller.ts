@@ -13,6 +13,7 @@ import { User } from '../decorators/user.decorator';
 import { File } from '../types/file';
 import { UserProfile } from '../types/user';
 import { UploadService } from './upload.service';
+import { Auth } from '../decorators/auth.decorator';
 
 @ApiTags('Upload')
 @Controller('upload')
@@ -21,7 +22,7 @@ export class UploadController {
 
   @Post('/single')
   @UseInterceptors(FileInterceptor('file'))
-  @UseGuards(JwtGuard)
+  @Auth()
   uploadFile(
     @User() user: UserProfile,
     @UploadedFile() file: Express.Multer.File,
@@ -31,7 +32,7 @@ export class UploadController {
 
   @Post('/array')
   @UseInterceptors(FilesInterceptor('files'))
-  @UseGuards(JwtGuard)
+  @Auth()
   uploadFiles(
     @User() user: UserProfile,
     @UploadedFiles() files: Array<Express.Multer.File>,

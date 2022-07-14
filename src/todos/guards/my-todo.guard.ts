@@ -1,7 +1,6 @@
 import {
   CanActivate,
   ExecutionContext,
-  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -10,6 +9,7 @@ import { Model } from 'mongoose';
 import { createHttpException } from '../../errors/create-error';
 import { ErrorCodes } from '../../errors/error-definition';
 import { TodoDocument } from '../../infra/database/models/todo.model';
+import { UnauthorizedRequestException } from '../../auth/exceptions/unauthorized-request.exception';
 
 @Injectable()
 export class MyTodoGuard implements CanActivate {
@@ -29,7 +29,7 @@ export class MyTodoGuard implements CanActivate {
       });
     }
     if (String(todoDocument.creator) !== String(user._id)) {
-      throw new ForbiddenException('권한이 없는 요청입니다.');
+      throw new UnauthorizedRequestException();
     }
 
     return true;

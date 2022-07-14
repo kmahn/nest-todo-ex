@@ -1,22 +1,20 @@
-import {
-  HttpStatus,
-  Inject,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { sign, verify } from 'jsonwebtoken';
 import { Connection, Model } from 'mongoose';
 import { v4 as uuidV4 } from 'uuid';
 import authConfig from '../config/factories/auth.config';
-import { ErrorCodes } from '../errors/error-definition';
 import { AuthDocument } from '../infra/database/models/auth.model';
 import { RefreshTokenDocument } from '../infra/database/models/refresh-token.model';
 import { UserDocument } from '../infra/database/models/user.model';
 import { AuthTokens } from '../types/auth-tokens';
 import { UserProfile } from '../types/user';
+import { UserNotFoundException } from '../users/exceptions/user-not-found.exception';
+import { InvalidPasswordException } from './exceptions/invalid-password.exception';
+import { InvalidRefreshTokenException } from './exceptions/invalid-refresh-token.exception';
+import { AccessTokenExpiredException } from './exceptions/access-token-expired.exception';
+import { InvalidAccessTokenException } from './exceptions/invalid-access-token.exception';
 
 @Injectable()
 export class AuthService {
@@ -32,11 +30,11 @@ export class AuthService {
     const { UserModel } = this.connection.models;
     const exUser: UserDocument = await UserModel.findOne({ email });
     if (!exUser) {
-      throw new NotFoundException('찾을 수 없는 사용자입니다.');
+      throw new UserNotFoundException();
     }
     const exAuth: AuthDocument = await this.authModel.findById(exUser.auth);
     if (!exAuth.validatePassword(password)) {
-      throw new UnauthorizedException('잘못된 비밀번호입니다.');
+      throw new InvalidPasswordException();
     }
 
     return {
@@ -75,7 +73,7 @@ export class AuthService {
     });
 
     if (!document) {
-      throw new UnauthorizedException('유효한 리프레시토큰이 아닙니다.');
+      throw new InvalidRefreshTokenException();
     }
 
     return document.user;
@@ -103,14 +101,11 @@ export class AuthService {
 
       return { _id, role };
     } catch (e) {
-      const code =
-        e.name === 'TokenExpiredError'
-          ? ErrorCodes.ACCESS_TOKEN_EXPIRED
-          : '유효하지 않은 액세스토큰입니다.';
-      throw new UnauthorizedException({
-        status: HttpStatus.UNAUTHORIZED,
-        code,
-      });
+      if (e.name === 'TokenExpiredError') {
+        throw new AccessTokenExpiredException();
+      } else {
+        throw new InvalidAccessTokenException();
+      }
     }
   }
 }

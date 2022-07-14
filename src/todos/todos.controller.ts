@@ -52,7 +52,7 @@ export class TodosController {
   }
 
   @Post()
-  @UseGuards(JwtGuard)
+  @Auth()
   create(
     @User() user: UserProfile,
     @Body() dto: CreateTodoDto,
@@ -63,7 +63,7 @@ export class TodosController {
 
   @Put(':id')
   @UseGuards(MyTodoGuard)
-  @UseGuards(JwtGuard)
+  @Auth()
   update(
     @Param('id') id: string,
     @Body() dto: UpdateTodoDto,
@@ -73,7 +73,7 @@ export class TodosController {
 
   @Delete(':id')
   @UseGuards(MyTodoGuard)
-  @UseGuards(JwtGuard)
+  @Auth()
   deleteOne(@Param('id') id: string): Promise<TodoDocument> {
     return this.todosService.deleteOne(id);
   }
