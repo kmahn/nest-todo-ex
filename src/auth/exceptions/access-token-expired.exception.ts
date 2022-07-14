@@ -1,8 +1,11 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { ApiExceptionExample } from '../../types/exception';
+import {
+  ApiExceptionExample,
+  HttpExceptionResponse,
+} from '../../types/exception';
 import { ErrorCodes } from '../../errors/error-definition';
 
-export class ExpiredAccessTokenException
+export class AccessTokenExpiredException
   extends UnauthorizedException
   implements ApiExceptionExample
 {
@@ -13,6 +16,9 @@ export class ExpiredAccessTokenException
   }
 
   get example(): HttpExceptionResponse {
-    return undefined;
+    return {
+      status: this.getStatus(),
+      code: ErrorCodes.ACCESS_TOKEN_EXPIRED,
+    };
   }
 }
