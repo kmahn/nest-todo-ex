@@ -1,10 +1,10 @@
-import { BadRequestException } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDocument } from '../../infra/database/models/user.model';
 import { CreateUserEvent } from '../events/create-user.event';
 import { CreateUserCommand } from './create-user.command';
+import { EmailAlreadyInUseException } from '../exceptions/email-already-in-use.exception';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserCommandHandler
@@ -19,7 +19,7 @@ export class CreateUserCommandHandler
     const { email, name, phone, password } = command;
     const exUser = await this.userModel.findOne({ email });
     if (!!exUser) {
-      throw new BadRequestException('사용하고 있는 이메일입니다.');
+      throw new EmailAlreadyInUseException();
     }
     const userDocument = await this.userModel.create({ email, name, phone });
     this.eventBus.publish(
