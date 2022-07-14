@@ -3,7 +3,6 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { HttpExceptionResponse } from '../types/exception';
@@ -23,7 +22,7 @@ export class JwtExceptionFilter implements ExceptionFilter {
       code = ErrorCodes.ACCESS_TOKEN_EXPIRED;
     }
     response.status(status).json({
-      status: status,
+      status,
       code,
     } as HttpExceptionResponse);
   }
