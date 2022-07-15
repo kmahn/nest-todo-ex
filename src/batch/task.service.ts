@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { Cron, SchedulerRegistry } from '@nestjs/schedule';
+import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 import { promises } from 'fs';
 import { Model, Promise } from 'mongoose';
 import { join } from 'path';
@@ -17,13 +17,13 @@ export class TaskService {
     @InjectModel(FileDocument.name) private fileModel: Model<FileDocument>,
   ) {}
 
-  @Cron('0 * * * * *', {
+  @Cron(CronExpression.EVERY_HOUR, {
     name: 'unused file deletion',
     timeZone: 'Asia/Seoul',
   })
   async handleSchedule() {
     const beforeHour = new Date();
-    beforeHour.setMinutes(beforeHour.getMinutes() - 1);
+    beforeHour.setHours(beforeHour.getHours() - 1);
     const unusedFiles = await this.fileModel.find({
       refType: null,
       createdAt: { $lte: beforeHour },
