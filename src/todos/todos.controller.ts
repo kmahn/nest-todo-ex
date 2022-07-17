@@ -11,7 +11,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtGuard } from '../auth/guards/jwt.guard';
 import { Auth } from '../decorators/auth.decorator';
 import { User } from '../decorators/user.decorator';
 import { TodoDocument } from '../infra/database/models/todo.model';
@@ -39,14 +38,13 @@ export class TodosController {
   findMyAll(
     @User() user: UserProfile,
     @Query() query: QueryTodoDto,
-    @Req() req: any,
   ): Promise<TodoDocument[]> {
-    console.log(req.aaa);
     query.user = user._id;
     return this.todosService.findAll(query);
   }
 
   @Get(':id')
+  @Auth()
   findOne(@Param('id') id: string): Promise<TodoDocument> {
     return this.todosService.findOne(id);
   }
